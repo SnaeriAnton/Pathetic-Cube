@@ -5,6 +5,8 @@ public class HealthBar : MonoBehaviour
 {
     [SerializeField] private Slider _slider;
 
+    public float Health => _slider.value;
+
     private int _maxValue = 100;
 
     private void Start()
@@ -12,13 +14,14 @@ public class HealthBar : MonoBehaviour
         _slider.maxValue = _maxValue;
         _slider.value = _maxValue;
     }
+
     public void OnValyeChanged(int value)
     {
         _slider.value += value;
+    }
 
-        if (true)
-        {
-
-        }
+    public void ExplosionDamage()
+    {
+        _slider.value -= _maxValue/2;
     }
 }
