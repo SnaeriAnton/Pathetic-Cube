@@ -14,6 +14,9 @@ public class Enemy : MonoBehaviour
     private float _speed = 0.5f;
     private float _dilay = 1f;
     private Coroutine _detain;
+    private float _offseZ = 0;
+    private float _offseX = 0;
+    private float _force = 1;
 
     private bool Death => _healthBar.Health <= 0;
     public Transform Transform => _transform;
@@ -26,7 +29,7 @@ public class Enemy : MonoBehaviour
             Die();
     }
 
-    public void Accept(Vector3 center, bool isCure)
+    public void Accept(Vector3 direction, bool isCure)
     {
         if (_detain == null)
         {
@@ -36,7 +39,34 @@ public class Enemy : MonoBehaviour
                 _detain = StartCoroutine(Detain(-_valueBar));
         }
 
-        _transform.position = Vector3.MoveTowards(_transform.position, center, _speed * Time.deltaTime);
+        if (isCure == false)
+        {
+            if (_transform.position.z > direction.z)
+                _offseZ = _force;
+            else
+                _offseZ = -_force;
+
+            if (_transform.position.x > direction.x)
+                _offseX = _force;
+            else
+                _offseX = -_force;
+
+            direction = new Vector3(_transform.position.x + _offseX, _transform.position.y, _transform.position.z + _offseZ);
+        }
+
+        
+
+
+        _transform.position = Vector3.MoveTowards(_transform.position, direction, _speed * Time.deltaTime);
+    }
+
+    public void StopAction()
+    {
+        if (_detain != null)
+        {
+            StopCoroutine(_detain);
+            _detain = null;
+        }
     }
 
     private void Die()
