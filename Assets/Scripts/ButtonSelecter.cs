@@ -8,6 +8,9 @@ public class ButtonSelecter : MonoBehaviour
     [SerializeField] private Button _buttonHealing;
     [SerializeField] private Button _buttonBeating;
     [SerializeField] private Button _buttonPedestal;
+    [SerializeField] private GameObject _objectHealing;
+    [SerializeField] private GameObject _objectBeating;
+    [SerializeField] private GameObject _objectPedestal;
 
 
     private float _dilay = 0.5f;
@@ -34,7 +37,7 @@ public class ButtonSelecter : MonoBehaviour
     {
         _createrRay.SelectePedestal(false);
         _createrRay.ChoiñeRay(true);
-        _buttonHealing.enabled = false;
+        _objectHealing.SetActive(false);
         _detainHealing = StartCoroutine(DetainHealing());
     }
 
@@ -42,14 +45,14 @@ public class ButtonSelecter : MonoBehaviour
     {
         _createrRay.SelectePedestal(false);
         _createrRay.ChoiñeRay(false);
-        _buttonBeating.enabled = false;
+        _objectBeating.SetActive(false);
         _detainBeating = StartCoroutine(DetainBeating());
     }
 
     private void OnCreatePedestal()
     {
         _createrRay.SelectePedestal(true);
-        _buttonPedestal.enabled = false;
+        _objectPedestal.SetActive(false);
         _detainPedestail = StartCoroutine(DetainPedestail());
     }
 
@@ -58,7 +61,7 @@ public class ButtonSelecter : MonoBehaviour
     {
         var dilay = new WaitForSeconds(_dilay);
         yield return dilay;
-        _buttonHealing.enabled = true;
+        _objectHealing.SetActive(true);
         if (_detainHealing != null)
             StopCoroutine(_detainHealing);
     }
@@ -67,7 +70,7 @@ public class ButtonSelecter : MonoBehaviour
     {
         var dilay = new WaitForSeconds(_dilay);
         yield return dilay;
-        _buttonBeating.enabled = true;
+        _objectBeating.SetActive(true);
         if (_detainBeating != null)
             StopCoroutine(_detainBeating);
     }
@@ -76,7 +79,7 @@ public class ButtonSelecter : MonoBehaviour
     {
         var dilay = new WaitForSeconds(_dilayOedestal);
         yield return dilay;
-        _buttonPedestal.enabled = true;
+        _objectPedestal.SetActive(true);
         if (_detainPedestail != null)
             StopCoroutine(_detainPedestail);
     }

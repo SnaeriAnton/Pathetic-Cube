@@ -6,6 +6,8 @@ public class Ray : MonoBehaviour
     [SerializeField] private Transform _player;
     [SerializeField] private CreaterRay _createrRay;
     [SerializeField] private PlayerMover _playerMover;
+    [SerializeField] private Material _healingMat;
+    [SerializeField] private Material _beatingMat;
 
     private bool _isFire = false;
     private Enemy _enemy;
@@ -42,9 +44,15 @@ public class Ray : MonoBehaviour
         _lineRenderer.enabled = true;
 
         if (_isHealingRay == true)
+        {
+            _lineRenderer.material = _healingMat;
             _enemy.Accept(_player.position, _isHealingRay);
+        }
         else
+        {
+            _lineRenderer.material = _beatingMat;
             _enemy.Accept(-_player.position, _isHealingRay);
+        }
 
 
         _lineRenderer.SetPosition(0, _player.position);
